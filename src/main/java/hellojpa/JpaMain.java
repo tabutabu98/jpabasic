@@ -32,15 +32,26 @@ public class JpaMain {
 //            findMember.setName("송예찬");
 
             // Member 객체가 대상
-            List<Member> result = em.createQuery("select m from Member as m", Member.class)
-                    .setFirstResult(5)
-                    .setMaxResults(8)
-                    .getResultList();
+//            List<Member> result = em.createQuery("select m from Member as m", Member.class)
+//                    .setFirstResult(5)
+//                    .setMaxResults(8)
+//                    .getResultList();
+//
+//            for (Member member : result) {
+//                System.out.println("member.name = " + member.getName());
+//            }
 
-            for (Member member : result) {
-                System.out.println("member.name = " + member.getName());
-            }
+            // 비영속 상태
+            Member member = new Member();
+            member.setId(100L);
+            member.setName("HelloJPA");
 
+            // 영속 상태, 지금 이 시점에서는 디비에 저장하지 않음
+            System.out.println("===BEFORE===");
+            em.persist(member);
+            System.out.println("===AFTER===");
+
+            // 트랜젝션의 커밋에서 sql문을 던진다.
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
