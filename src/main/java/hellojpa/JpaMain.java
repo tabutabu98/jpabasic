@@ -26,21 +26,57 @@ public class JpaMain {
 //            member2.setName("홍길동");
 //            em.persist(member2);
 
-//            Member findMember = em.find(Member.class, 1L);
-//            System.out.println("findMember.id = " + findMember.getId());
-//            System.out.println("findMember.name = " + findMember.getName());
-//            findMember.setName("송예찬");
+//            Member findMember1 = em.find(Member.class, 1L);
+//            System.out.println("findMember1.id = " + findMember1.getId());
+//            System.out.println("findMember1.name = " + findMember1.getName());
+//            findMember1.setName("송예찬");
 
             // Member 객체가 대상
-            List<Member> result = em.createQuery("select m from Member as m", Member.class)
-                    .setFirstResult(5)
-                    .setMaxResults(8)
-                    .getResultList();
+//            List<Member> result = em.createQuery("select m from Member as m", Member.class)
+//                    .setFirstResult(5)
+//                    .setMaxResults(8)
+//                    .getResultList();
+//
+//            for (Member member : result) {
+//                System.out.println("member.name = " + member.getName());
+//            }
 
-            for (Member member : result) {
-                System.out.println("member.name = " + member.getName());
-            }
+            // 비영속 상태
+//            Member member = new Member();
+//            member.setId(100L);
+//            member.setName("HelloJPA");
+//            Member member = new Member();
+//            member.setId(101L);
+//            member.setName("HelloJPA_2");
 
+            // 영속 상태, 지금 이 시점에서는 디비에 저장하지 않음
+//            System.out.println("===BEFORE===");
+//            em.persist(member);
+//            System.out.println("===AFTER===");
+
+//            Member member1 = new Member(150L, "A");
+//            Member member2 = new Member(160L, "A");
+//            em.persist(member1);
+//            em.persist(member2);
+
+            Member member = em.find(Member.class, 150L);
+            member.setName("ZZZZZ");
+
+            System.out.println("==============================================================");
+
+//            Member findMember1 = em.find(Member.class, 101L);
+//            Member findMember2 = em.find(Member.class, 101L);
+
+            // 조회, 1차 캐쉬에서 바로 가져오기 때문에 sql문이 나가지 않음
+//            System.out.println("findMember1.id = " + findMember.getId());
+//            System.out.println("findMember1.name = " + findMember.getName());
+
+            // 영속 엔티티의 동일성을 보장
+//            System.out.println("result = " + (findMember1 == findMember2));
+
+
+
+            // 트랜젝션의 커밋에서 sql문을 던진다.
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
