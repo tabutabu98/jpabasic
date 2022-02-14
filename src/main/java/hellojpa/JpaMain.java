@@ -84,7 +84,13 @@ public class JpaMain {
             // 영속 엔티티의 동일성을 보장
 //            System.out.println("result = " + (findMember1 == findMember2));
 
+            // 필드와 컬럼 매핑
+            Member member = new Member();
+            member.setId(3L);
+            member.setUsername("C");
+            member.setRoleType(RoleType.GUEST);
 
+            em.persist(member);
 
             // 트랜젝션의 커밋에서 sql문을 던진다.
             tx.commit();
