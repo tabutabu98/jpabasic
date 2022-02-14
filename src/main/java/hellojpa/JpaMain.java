@@ -59,13 +59,13 @@ public class JpaMain {
 //            em.persist(member1);
 //            em.persist(member2);
 
-            Member member = em.find(Member.class, 150L);
+//            Member member = em.find(Member.class, 150L);
 //            member.setName("ZZZZZ");
-            member.setName("AAAAA");
+//            member.setName("AAAAA");
             // 영속성 컨테스트에서 끄집어 냄(detach) -> 준영속상태
 //            em.detach(member);
             // 영속성 컨테스트를 다 지운다.(초기화)
-            em.clear();
+//            em.clear();
 //            Member member2 = em.find(Member.class, 150L);
 
 //            Member member = new Member(200L, "member200");
@@ -84,7 +84,13 @@ public class JpaMain {
             // 영속 엔티티의 동일성을 보장
 //            System.out.println("result = " + (findMember1 == findMember2));
 
+            // 필드와 컬럼 매핑
+            Member member = new Member();
+            member.setId(3L);
+            member.setUsername("C");
+            member.setRoleType(RoleType.GUEST);
 
+            em.persist(member);
 
             // 트랜젝션의 커밋에서 sql문을 던진다.
             tx.commit();
