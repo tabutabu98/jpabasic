@@ -59,13 +59,13 @@ public class JpaMain {
 //            em.persist(member1);
 //            em.persist(member2);
 
-//            Member member = em.find(Member.class, 150L);
+            Member member = em.find(Member.class, 150L);
 //            member.setName("ZZZZZ");
-//            member.setName("AAAAA");
+            member.setName("AAAAA");
             // 영속성 컨테스트에서 끄집어 냄(detach) -> 준영속상태
 //            em.detach(member);
             // 영속성 컨테스트를 다 지운다.(초기화)
-//            em.clear();
+            em.clear();
 //            Member member2 = em.find(Member.class, 150L);
 
 //            Member member = new Member(200L, "member200");
