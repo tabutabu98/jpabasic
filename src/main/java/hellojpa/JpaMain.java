@@ -93,13 +93,35 @@ public class JpaMain {
 //            em.persist(member);
 
             // 기본 키 매핑
-            Member member = new Member();
-            member.setUsername("C");
+//            Member member = new Member();
+//            member.setUsername("C");
+//
+//            System.out.println("==========================");
+//            // Identity전략에서는 persistence 시점에서 쿼리문을 날린다.
+//            em.persist(member);
+//            System.out.println("member.id = " + member.getId());
+//            System.out.println("==========================");
+
+            // SEQUENCE : allocationSize
+            Member member1 = new Member();
+            member1.setUsername("A");
+
+            Member member2 = new Member();
+            member2.setUsername("B");
+
+            Member member3 = new Member();
+            member3.setUsername("C");
 
             System.out.println("==========================");
-            // Identity전략에서는 persistence 시점에서 쿼리문을 날린다.
-            em.persist(member);
-            System.out.println("member.id = " + member.getId());
+
+            em.persist(member1);    // 1, 51
+            em.persist(member2);    // MEN
+            em.persist(member3);    // MEN
+
+            System.out.println("member1 = " + member1.getId());
+            System.out.println("member2 = " + member2.getId());
+            System.out.println("member3 = " + member3.getId());
+
             System.out.println("==========================");
 
             // 트랜젝션의 커밋에서 sql문을 던진다.
