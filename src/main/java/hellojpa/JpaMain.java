@@ -72,7 +72,7 @@ public class JpaMain {
 //            em.persist(member);
 //            em.flush();
 
-            System.out.println("==============================================================");
+//            System.out.println("==============================================================");
 
 //            Member findMember1 = em.find(Member.class, 101L);
 //            Member findMember2 = em.find(Member.class, 101L);
@@ -85,12 +85,22 @@ public class JpaMain {
 //            System.out.println("result = " + (findMember1 == findMember2));
 
             // 필드와 컬럼 매핑
-            Member member = new Member();
-            member.setId(3L);
-            member.setUsername("C");
-            member.setRoleType(RoleType.GUEST);
+//            Member member = new Member();
+//            member.setId(3L);
+//            member.setUsername("C");
+//            member.setRoleType(RoleType.GUEST);
+//
+//            em.persist(member);
 
+            // 기본 키 매핑
+            Member member = new Member();
+            member.setUsername("C");
+
+            System.out.println("==========================");
+            // Identity전략에서는 persistence 시점에서 쿼리문을 날린다.
             em.persist(member);
+            System.out.println("member.id = " + member.getId());
+            System.out.println("==========================");
 
             // 트랜젝션의 커밋에서 sql문을 던진다.
             tx.commit();
