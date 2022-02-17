@@ -102,27 +102,40 @@ public class JpaMain {
 //            System.out.println("member.id = " + member.getId());
 //            System.out.println("==========================");
 
-            // SEQUENCE : allocationSize
-            Member member1 = new Member();
-            member1.setUsername("A");
+            // 딘방향 연관관계
+//            Team team = new Team();
+//            team.setName("TeamA");
+//            em.persist(team);
+//
+//            Member member = new Member();
+//            member.setUsername("member1");
+//            member.setTeamId(team.getId());
+//            em.persist(member);
+//
+//            Member findMember = em.find(Member.class, member.getId());
+//
+//            Long findTeamId = findMember.getTeamId();
+//            Team findTeam = em.find(Team.class, findTeamId);
 
-            Member member2 = new Member();
-            member2.setUsername("B");
+            // 저장
+            Team team = new Team();
+            team.setName("TeamA");
+            em.persist(team);
 
-            Member member3 = new Member();
-            member3.setUsername("C");
+            Member member = new Member();
+            member.setUsername("member1");
+            member.setTeam(team);
+            em.persist(member);
+            em.flush();
+            em.clear();
 
-            System.out.println("==========================");
+            Member findMember = em.find(Member.class, member.getId());
 
-            em.persist(member1);    // 1, 51
-            em.persist(member2);    // MEN
-            em.persist(member3);    // MEN
+            Team findTeam = findMember.getTeam();
+            System.out.println("findTeam = " + findTeam.getName());
 
-            System.out.println("member1 = " + member1.getId());
-            System.out.println("member2 = " + member2.getId());
-            System.out.println("member3 = " + member3.getId());
-
-            System.out.println("==========================");
+            Team newTeam = em.find(Team.class, 100L);
+            findMember.setTeam(newTeam);
 
             // 트랜젝션의 커밋에서 sql문을 던진다.
             tx.commit();
