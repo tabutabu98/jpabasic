@@ -138,24 +138,52 @@ public class JpaMain {
 //            findMember.setTeam(newTeam);
 
             // 양방향 연관관계와 연관관계의 주인 1 - 기본
+//            Team team = new Team();
+//            team.setName("TeamA");
+//            em.persist(team);
+//
+//            Member member = new Member();
+//            member.setUsername("member1");
+//            member.setTeam(team);
+//            em.persist(member);
+//            em.flush();
+//            em.clear();
+//
+//            Member findMember = em.find(Member.class, member.getId());
+//
+//            List<Member> members = findMember.getTeam().getMembers();
+//
+//            for (Member m : members) {
+//                System.out.println("m = " + m.getUsername());
+//            }
+
+            // 양방향 연관관계와 연관관계의 주인 2 - 주의점, 정리
             Team team = new Team();
             team.setName("TeamA");
             em.persist(team);
 
             Member member = new Member();
             member.setUsername("member1");
-            member.setTeam(team);
+//            member.changeTeam(team);
             em.persist(member);
+
+//            team.getMembers().add(member);    // <- set시점에서 이미 세팅해두면 사용할 필요가 없다.(연관관계 편의 메서드)
+            team.addMember(member);
+
             em.flush();
             em.clear();
 
-            Member findMember = em.find(Member.class, member.getId());
+            team.addMember(member);
 
-            List<Member> members = findMember.getTeam().getMembers();
+            Team findTeam = em.find(Team.class, team.getId());  // 1차 캐시(영속성 컨텍스트) <- 플러쉬, 클리어를 하지 않았을 경우 디비에 저장되어있지 않기 때문에
+            List<Member> members = findTeam.getMembers();
 
-            for (Member m : members) {
-                System.out.println("m = " + m.getUsername());
-            }
+            System.out.println("==================================");
+//            for (Member m : members) {
+//                System.out.println("m = " + m.getUsername());
+//            }
+            System.out.println("members = " + findTeam); // <- 스택오버플로우(무한루프)
+            System.out.println("==================================");
 
             // 트랜젝션의 커밋에서 sql문을 던진다.
             tx.commit();
