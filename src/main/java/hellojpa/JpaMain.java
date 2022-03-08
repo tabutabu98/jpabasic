@@ -15,22 +15,13 @@ public class JpaMain {
         tx.begin();
 
         try {
-            // 영속성 전이(CASCADE)와 고아 객체
-            Child child1 = new Child();
-            Child child2 = new Child();
+            // 임베디드 타입
+            Member member = new Member();
+            member.setUsername("hello");
+            member.setHomeAddress(new Address("city", "street", "10000"));
+            member.setWorkPeriod(new Period());
 
-            Parent parent = new Parent();
-            parent.addChild(child1);
-            parent.addChild(child2);
-
-            em.persist(parent);
-
-            em.flush();
-            em.clear();
-
-            Parent findParent = em.find(Parent.class, parent.getId());
-            findParent.getChildList().remove(0);
-
+            em.persist(member);
 
             tx.commit();
         } catch (Exception e) {
